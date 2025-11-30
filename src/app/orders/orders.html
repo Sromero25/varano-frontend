@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Gestión de Pedidos</h2>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Método Pago</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>{{ order.id_pedido }}</td>
+            <td>{{ order.cliente_nombre }} {{ order.cliente_apellido }}</td>
+            <td>{{ order.fecha_pedido | date:'dd/MM/yyyy' }}</td>
+            <td>${{ order.total }}</td>
+            <td>
+              <span class="badge" [ngClass]="getStatusBadgeClass(order.estado)">
+                {{ getStatusText(order.estado) }}
+              </span>
+            </td>
+            <td>{{ order.metodo_pago }}</td>
+            <td>
+              <div class="btn-group">
+                <select class="form-select form-select-sm" (change)="updateOrderStatus(order.id_pedido, $event)">
+                  <option value="pendiente" [selected]="order.estado === 'pendiente'">Pendiente</option>
+                  <option value="confirmado" [selected]="order.estado === 'confirmado'">Confirmado</option>
+                  <option value="en_proceso" [selected]="order.estado === 'en_proceso'">En Proceso</option>
+                  <option value="enviado" [selected]="order.estado === 'enviado'">Enviado</option>
+                  <option value="entregado" [selected]="order.estado === 'entregado'">Entregado</option>
+                  <option value="cancelado" [selected]="order.estado === 'cancelado'">Cancelado</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="orders.length === 0">
+            <td colspan="7" class="text-center text-muted">No hay pedidos registrados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

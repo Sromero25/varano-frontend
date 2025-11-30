@@ -1,0 +1,102 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Gestión de Clientes</h2>
+  <button class="btn btn-primary" (click)="showForm()">
+    <i class="bi bi-plus-circle me-2"></i>Nuevo Cliente
+  </button>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Ciudad</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of customers">
+            <td>{{ customer.id_cliente }}</td>
+            <td>{{ customer.nombre }} {{ customer.apellido }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.telefono || 'N/A' }}</td>
+            <td>{{ customer.ciudad || 'N/A' }}</td>
+            <td>
+              <span class="badge" [ngClass]="customer.activo ? 'bg-success' : 'bg-danger'">
+                {{ customer.activo ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="editCustomer(customer)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteCustomer(customer.id_cliente)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="customers.length === 0">
+            <td colspan="7" class="text-center text-muted">No hay clientes registrados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de formulario -->
+<div class="modal fade" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ editingCustomer ? 'Editar' : 'Nuevo' }} Cliente</h5>
+        <button type="button" class="btn-close" (click)="hideForm()"></button>
+      </div>
+      <div class="modal-body">
+        <form #customerForm="ngForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" [(ngModel)]="formData.nombre" name="nombre" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Apellido</label>
+              <input type="text" class="form-control" [(ngModel)]="formData.apellido" name="apellido" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="formData.email" name="email" required>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Teléfono</label>
+              <input type="text" class="form-control" [(ngModel)]="formData.telefono" name="telefono">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Ciudad</label>
+              <input type="text" class="form-control" [(ngModel)]="formData.ciudad" name="ciudad">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <textarea class="form-control" [(ngModel)]="formData.direccion" name="direccion" rows="2"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="hideForm()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="saveCustomer()">
+          {{ editingCustomer ? 'Actualizar' : 'Crear' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showModal"></div>

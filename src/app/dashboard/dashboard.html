@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-md-3 mb-4">
+    <div class="card text-white bg-primary">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>{{ productsCount }}</h4>
+            <p class="mb-0">Productos</p>
+          </div>
+          <div class="align-self-center">
+            <i class="bi bi-box-seam display-6"></i>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex align-items-center justify-content-between">
+        <a routerLink="/admin/products" class="text-white small">Ver detalles</a>
+        <i class="bi bi-arrow-right-short"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 mb-4">
+    <div class="card text-white bg-success">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>{{ categoriesCount }}</h4>
+            <p class="mb-0">Categorías</p>
+          </div>
+          <div class="align-self-center">
+            <i class="bi bi-tags display-6"></i>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex align-items-center justify-content-between">
+        <a routerLink="/admin/categories" class="text-white small">Ver detalles</a>
+        <i class="bi bi-arrow-right-short"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 mb-4">
+    <div class="card text-white bg-warning">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>{{ ordersCount }}</h4>
+            <p class="mb-0">Pedidos</p>
+          </div>
+          <div class="align-self-center">
+            <i class="bi bi-receipt display-6"></i>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex align-items-center justify-content-between">
+        <a routerLink="/admin/orders" class="text-white small">Ver detalles</a>
+        <i class="bi bi-arrow-right-short"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 mb-4">
+    <div class="card text-white bg-info">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>{{ customersCount }}</h4>
+            <p class="mb-0">Clientes</p>
+          </div>
+          <div class="align-self-center">
+            <i class="bi bi-people display-6"></i>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex align-items-center justify-content-between">
+        <a routerLink="/admin/customers" class="text-white small">Ver detalles</a>
+        <i class="bi bi-arrow-right-short"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Resumen General</h5>
+      </div>
+      <div class="card-body">
+        <p>Bienvenido al panel de administración de Varano.</p>
+        <p>Utiliza el menú lateral para navegar entre las diferentes secciones.</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Gestión de Categorías</h2>
+  <button class="btn btn-primary" (click)="showForm()">
+    <i class="bi bi-plus-circle me-2"></i>Nueva Categoría
+  </button>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td>{{ category.id_categoria }}</td>
+            <td>{{ category.nombre }}</td>
+            <td>{{ category.descripcion || 'Sin descripción' }}</td>
+            <td>
+              <span class="badge" [ngClass]="category.activo ? 'bg-success' : 'bg-danger'">
+                {{ category.activo ? 'Activa' : 'Inactiva' }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="editCategory(category)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteCategory(category.id_categoria)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="categories.length === 0">
+            <td colspan="5" class="text-center text-muted">No hay categorías registradas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de formulario -->
+<div class="modal fade" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ editingCategory ? 'Editar' : 'Nueva' }} Categoría</h5>
+        <button type="button" class="btn-close" (click)="hideForm()"></button>
+      </div>
+      <div class="modal-body">
+        <form #categoryForm="ngForm">
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" [(ngModel)]="formData.nombre" name="nombre" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" [(ngModel)]="formData.descripcion" name="descripcion" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="hideForm()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="saveCategory()">
+          {{ editingCategory ? 'Actualizar' : 'Crear' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showModal"></div>

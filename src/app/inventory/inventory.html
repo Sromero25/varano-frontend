@@ -1,0 +1,94 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Gestión de Inventario</h2>
+  <button class="btn btn-primary" (click)="showForm()">
+    <i class="bi bi-plus-circle me-2"></i>Agregar Stock
+  </button>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Talla</th>
+            <th>Cantidad</th>
+            <th>Mínimo</th>
+            <th>Ubicación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of inventory">
+            <td>{{ item.producto_nombre || 'Producto ' + item.id_producto }}</td>
+            <td>{{ item.talla }}</td>
+            <td [class.text-danger]="item.cantidad < item.cantidad_minima">{{ item.cantidad }}</td>
+            <td>{{ item.cantidad_minima }}</td>
+            <td>{{ item.ubicacion || 'N/A' }}</td>
+            <td>
+              <button class="btn btn-sm btn-warning" (click)="editInventory(item)">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="inventory.length === 0">
+            <td colspan="6" class="text-center text-muted">No hay registros de inventario</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de formulario -->
+<div class="modal fade" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ editingItem ? 'Editar' : 'Agregar' }} Stock</h5>
+        <button type="button" class="btn-close" (click)="hideForm()"></button>
+      </div>
+      <div class="modal-body">
+        <form #inventoryForm="ngForm">
+          <div class="mb-3">
+            <label class="form-label">Producto</label>
+            <select class="form-select" [(ngModel)]="formData.id_producto" name="id_producto" required>
+              <option value="">Seleccionar producto</option>
+              <option *ngFor="let product of products" [value]="product.id_producto">
+                {{ product.nombre }}
+              </option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Talla</label>
+              <input type="number" class="form-control" [(ngModel)]="formData.talla" name="talla" step="0.5" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Cantidad</label>
+              <input type="number" class="form-control" [(ngModel)]="formData.cantidad" name="cantidad" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Cantidad Mínima</label>
+              <input type="number" class="form-control" [(ngModel)]="formData.cantidad_minima" name="cantidad_minima" value="5">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Ubicación</label>
+              <input type="text" class="form-control" [(ngModel)]="formData.ubicacion" name="ubicacion">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="hideForm()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="saveInventory()">
+          {{ editingItem ? 'Actualizar' : 'Agregar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showModal"></div>
